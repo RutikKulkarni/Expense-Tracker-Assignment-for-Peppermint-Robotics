@@ -5,15 +5,19 @@ const TransactionList = () => {
   const { transactions, deleteTransaction } = useContext(ExpenseContext);
 
   return (
-    <div className="bg-white p-4 rounded-lg shadow-lg my-4">
-      <h3 className="text-lg font-semibold mb-2">Transaction History</h3>
+    <div className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-lg my-4 transition-transform transform">
+      <h3 className="text-xl font-semibold mb-4 text-gray-800 dark:text-gray-200">
+        Transaction History
+      </h3>
       <ul>
         {transactions.map((transaction) => (
           <li
             key={transaction.id}
-            className="flex justify-between p-2 border-b border-gray-200"
+            className="flex justify-between items-center p-4 border-b border-gray-200 dark:border-gray-600 hover:bg-gray-50 dark:hover:bg-gray-700 transition duration-300"
           >
-            <span>{transaction.description}</span>
+            <span className="font-medium text-gray-800 dark:text-gray-200">
+              {transaction.description}
+            </span>
             <span
               className={`font-bold ${
                 transaction.type === "Income"
@@ -25,7 +29,7 @@ const TransactionList = () => {
             </span>
             <button
               onClick={() => deleteTransaction(transaction.id)}
-              className="bg-red-500 text-white px-2 py-1 rounded hover:bg-red-600"
+              className="bg-red-500 dark:bg-red-600 text-white px-3 py-1 rounded-lg hover:bg-red-600 dark:hover:bg-red-700 transition duration-300"
             >
               Delete
             </button>

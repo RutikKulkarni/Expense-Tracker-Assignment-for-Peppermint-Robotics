@@ -15,10 +15,12 @@ const Balance = () => {
   const balance = income - expense;
 
   return (
-    <div className="bg-white p-4 rounded-lg shadow-lg">
-      <h2 className="text-xl font-semibold">Net Balance</h2>
+    <div className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-lg transition-transform transform">
+      <h2 className="text-2xl font-semibold mb-2 text-gray-800 dark:text-gray-200">
+        Net Balance
+      </h2>
       <p
-        className={`text-2xl font-bold ${
+        className={`text-3xl font-bold ${
           balance >= 0 ? "text-green-500" : "text-red-500"
         }`}
       >

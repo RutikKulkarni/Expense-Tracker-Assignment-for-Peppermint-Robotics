@@ -10,13 +10,13 @@ export const ExpenseContext = createContext(initialState);
 const expenseReducer = (state, action) => {
   switch (action.type) {
     case "ADD_TRANSACTION":
-        snackbarGenerator.enqueueSnackbarFunc("Transaction added!", "success");
+      snackbarGenerator.enqueueSnackbarFunc("Transaction added!", "success");
       return {
         ...state,
         transactions: [action.payload, ...state.transactions],
       };
     case "DELETE_TRANSACTION":
-        snackbarGenerator.enqueueSnackbarFunc("Transaction deleted!", "error");
+      snackbarGenerator.enqueueSnackbarFunc("Transaction deleted!", "error");
       return {
         ...state,
         transactions: state.transactions.filter(
