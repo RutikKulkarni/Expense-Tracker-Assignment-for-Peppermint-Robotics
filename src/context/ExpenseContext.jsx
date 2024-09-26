@@ -1,8 +1,8 @@
-import React, { createContext, useReducer } from "react";
+import React, { createContext, useReducer, useEffect } from "react";
 import { snackbarGenerator } from "../utils/snackbarGenerator";
 
 const initialState = {
-  transactions: [],
+  transactions: JSON.parse(localStorage.getItem("transactions")) || [],
 };
 
 export const ExpenseContext = createContext(initialState);
@@ -30,6 +30,10 @@ const expenseReducer = (state, action) => {
 
 export const ExpenseProvider = ({ children }) => {
   const [state, dispatch] = useReducer(expenseReducer, initialState);
+
+  useEffect(() => {
+    localStorage.setItem("transactions", JSON.stringify(state.transactions));
+  }, [state.transactions]);
 
   const addTransaction = (transaction) => {
     dispatch({ type: "ADD_TRANSACTION", payload: transaction });

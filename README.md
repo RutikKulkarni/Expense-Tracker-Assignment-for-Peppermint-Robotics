@@ -1,6 +1,6 @@
 # Expense Tracker
 
-An expense tracker application that allows users to manage their finances effectively. The application enables users to add, delete, and track their expenses and incomes, ultimately helping them to see their net balance.
+An expense tracker application that allows users to manage their finances effectively. A simple, easy-to-use expense tracker application built with **ReactJS**, **Context API**, **TailwindCSS**, and **notistack** for managing expenses and income. The app allows users to add, delete, and track their expenses and income, while also displaying the Net Balance, Total Income, Total Expences in real-time.
 
 - Live URL: [Expense Tracker](https://expense-tracker-assignment-for-peppermint-robotics.vercel.app/)
 
@@ -11,6 +11,7 @@ An expense tracker application that allows users to manage their finances effect
 - **Show Net Balance**: The application calculates and displays the net balance based on the total income and expenses.
 - **Notifications**: Users receive alerts (using Notistack) whenever they add or delete a transaction, ensuring they are informed of the changes.
 - **Theme Selection**: Users can select between light and dark themes based on their preferences.
+- **Persistent Data**: The application uses local storage to keep track of expenses and incomes, allowing users to see their data even after a page reload.
 
 ## Requirements
 
@@ -61,3 +62,4 @@ To get started with the Expense Tracker application, follow these steps:
 ### Key Additions:
 - **Notifications**: Highlighted the use of Notistack for alerts when transactions are added or deleted.
 - **Theme Selection**: Mentioned that users can select between light and dark themes.
+- **Persistent Data**: Explained how local storage is used to keep track of expenses and incomes, providing a seamless experience for users even after reloading the page.
