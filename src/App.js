@@ -10,17 +10,20 @@ const App = () => {
     <ExpenseProvider>
       <div className="bg-gradient-to-r from-blue-200 to-purple-200 dark:from-gray-800 dark:to-gray-900 min-h-screen flex flex-col">
         <Navbar />
-        <div className="container mx-auto p-6 flex flex-col md:flex-row space-y-6 md:space-y-0 md:space-x-6">
-          <div className="md:w-2/3 flex flex-col space-y-4">
-            <div className="bg-white dark:bg-gray-800 shadow-lg rounded-lg p-6">
+        <div className="container mx-auto p-6 flex flex-col space-y-6 md:flex-row md:space-y-0 md:space-x-6">
+          <div className="flex flex-col space-y-4 md:w-2/3">
+            <div className="bg-white dark:bg-gray-800 shadow-lg rounded-lg p-6 order-1 md:order-none">
               <Balance />
             </div>
-            <div className="bg-white dark:bg-gray-800 shadow-lg rounded-lg p-6">
+            <div className="bg-white dark:bg-gray-800 shadow-lg rounded-lg p-6 order-2 md:hidden">
+              <AddTransaction />
+            </div>
+            <div className="bg-white dark:bg-gray-800 shadow-lg rounded-lg p-6 order-3 md:order-none">
               <TransactionList />
             </div>
           </div>
-          <div className="md:w-1/3 w-full">
-            <div className="bg-white dark:bg-gray-800 shadow-lg rounded-lg p-6 h-full">
+          <div className="md:w-1/3 w-full hidden md:block">
+            <div className="bg-white dark:bg-gray-800 shadow-lg rounded-lg p-6 h-100 overflow-auto">
               <AddTransaction />
             </div>
           </div>

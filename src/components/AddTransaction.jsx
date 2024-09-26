@@ -1,12 +1,15 @@
 import React, { useState, useContext } from "react";
 import { ExpenseContext } from "../context/ExpenseContext";
 import { v4 as uuidv4 } from "uuid";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 
 const AddTransaction = () => {
   const { addTransaction } = useContext(ExpenseContext);
   const [description, setDescription] = useState("");
   const [amount, setAmount] = useState("");
   const [type, setType] = useState("Expense");
+  const [date, setDate] = useState(new Date());
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -17,19 +20,17 @@ const AddTransaction = () => {
       description,
       amount: +amount,
       type,
-      date: new Date().toLocaleDateString(),
+      date: date.toLocaleDateString(),
     };
 
     addTransaction(newTransaction);
     setDescription("");
     setAmount("");
+    setDate(new Date());
   };
 
   return (
-    <form
-      onSubmit={handleSubmit}
-      className="bg-white dark:bg-gray-800 shadow-lg rounded-lg p-6 my-4 transition-transform transform "
-    >
+    <form onSubmit={handleSubmit} className="p-2 my-1">
       <h3 className="text-xl font-semibold mb-4 text-gray-800 dark:text-gray-200">
         Add New Transaction
       </h3>
@@ -47,6 +48,14 @@ const AddTransaction = () => {
         value={amount}
         onChange={(e) => setAmount(e.target.value)}
       />
+      <DatePicker
+        selected={date}
+        onChange={(date) => setDate(date)}
+        className="w-full mb-4 p-3 border border-gray-300 rounded-lg dark:border-gray-600 dark:bg-gray-700 dark:text-gray-200 focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-300"
+        dateFormat="dd/MM/yyyy"
+        wrapperClassName="w-full"
+      />
+
       <select
         className="w-full mb-4 p-3 border border-gray-300 rounded-lg dark:border-gray-600 dark:bg-gray-700 dark:text-gray-200 focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-300"
         value={type}

@@ -1,41 +1,98 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect, useState } from "react";
+import { MdOutlineDelete } from "react-icons/md";
 import { ExpenseContext } from "../context/ExpenseContext";
 
 const TransactionList = () => {
   const { transactions, deleteTransaction } = useContext(ExpenseContext);
+  const [truncateLength, setTruncateLength] = useState(30);
+
+  const handleResize = () => {
+    const screenWidth = window.innerWidth;
+    if (screenWidth < 768) {
+      setTruncateLength(15);
+    } else {
+      setTruncateLength(30);
+    }
+  };
+
+  useEffect(() => {
+    handleResize();
+    window.addEventListener("resize", handleResize);
+
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
 
   return (
-    <div className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-lg my-4 transition-transform transform">
-      <h3 className="text-xl font-semibold mb-4 text-gray-800 dark:text-gray-200">
+    <div className="p-2 my">
+      <h3 className="text-2xl font-semibold mb-4 text-gray-800 dark:text-gray-200">
         Transaction History
       </h3>
-      <ul>
-        {transactions.map((transaction) => (
-          <li
-            key={transaction.id}
-            className="flex justify-between items-center p-4 border-b border-gray-200 dark:border-gray-600 hover:bg-gray-50 dark:hover:bg-gray-700 transition duration-300"
-          >
-            <span className="font-medium text-gray-800 dark:text-gray-200">
-              {transaction.description}
-            </span>
-            <span
-              className={`font-bold ${
-                transaction.type === "Income"
-                  ? "text-green-500"
-                  : "text-red-500"
-              }`}
-            >
-              {transaction.type === "Income" ? "+" : "-"}₹{transaction.amount}
-            </span>
-            <button
-              onClick={() => deleteTransaction(transaction.id)}
-              className="bg-red-500 dark:bg-red-600 text-white px-3 py-1 rounded-lg hover:bg-red-600 dark:hover:bg-red-700 transition duration-300"
-            >
-              Delete
-            </button>
-          </li>
-        ))}
-      </ul>
+      {transactions.length === 0 ? (
+        <p className="text-center text-gray-600 dark:text-gray-400">
+          No transactions available.
+        </p>
+      ) : (
+        <div className="overflow-x-auto">
+          <table className="min-w-full table-auto text-left border-collapse">
+            <thead>
+              <tr className="bg-gray-200 dark:bg-gray-700">
+                <th className="p-3 text-gray-800 dark:text-gray-200 font-semibold">
+                  Description
+                </th>
+                <th className="p-3 text-gray-800 dark:text-gray-200 font-semibold text-center">
+                  Date
+                </th>
+                <th className="p-3 text-gray-800 dark:text-gray-200 font-semibold text-center">
+                  Amount
+                </th>
+                <th className="p-3 text-gray-800 dark:text-gray-200 font-semibold text-center">
+                  Actions
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              {transactions.map((transaction) => (
+                <tr
+                  key={transaction.id}
+                  className="border-b border-gray-200 dark:border-gray-600 hover:bg-gray-50 dark:hover:bg-gray-700"
+                >
+                  <td className="p-3 text-gray-800 dark:text-gray-200">
+                    {transaction.description.length > truncateLength
+                      ? `${transaction.description.substring(
+                          0,
+                          truncateLength
+                        )}...`
+                      : transaction.description}
+                  </td>
+                  <td className="p-3 text-gray-800 dark:text-gray-200 text-center">
+                    {transaction.date}
+                  </td>
+                  <td
+                    className={`p-3 font-bold ${
+                      transaction.type === "Income"
+                        ? "text-green-500"
+                        : "text-red-500"
+                    } text-center`}
+                  >
+                    {transaction.type === "Income" ? "+" : "-"}₹
+                    {transaction.amount}
+                  </td>
+                  <td className="p-3 text-center">
+                    <button
+                      onClick={() => deleteTransaction(transaction.id)}
+                      className="text-red-500 dark:text-red-600 hover:text-red-600 dark:hover:text-red-700 transition duration-300"
+                    >
+                      <MdOutlineDelete size={20} />
+                    </button>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      )}
     </div>
   );
 };
